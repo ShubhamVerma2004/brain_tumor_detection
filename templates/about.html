@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn about our brain tumor detection technology">
+    <title>About Our Technology | BrainScan</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="/" class="logo">BrainScan</a>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/training" target="_blank">Training</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <header>
+            <h1>About BrainScan</h1>
+            <p>Revolutionizing brain tumor detection through artificial intelligence</p>
+        </header>
+        
+        <main>
+            <div class="card">
+                <h2>Our Technology</h2>
+                <p>BrainScan utilizes cutting-edge deep learning algorithms trained on thousands of MRI scans to identify potential brain tumors with remarkable accuracy. Our convolutional neural network (CNN) architecture has been specifically optimized for medical imaging analysis.</p>
+                
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">📊</div>
+                        <h4>High Accuracy</h4>
+                        <p>Our model achieves over 97% accuracy in controlled tests, rivaling expert radiologists.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <h4>Rapid Analysis</h4>
+                        <p>Get preliminary results in seconds, significantly faster than traditional methods.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔍</div>
+                        <h4>Detailed Insights</h4>
+                        <p>Receive comprehensive reports including tumor location and probability estimates.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2>How It Works</h2>
+                <p>The system processes MRI images through multiple neural network layers that detect patterns and features invisible to the human eye. Each analysis goes through three validation steps to ensure reliability.</p>
+                
+                <h3>Processing Pipeline</h3>
+                <ol style="margin-left: 20px; line-height: 1.8;">
+                    <li><strong>Image Preprocessing:</strong> Normalization and enhancement of MRI scans</li>
+                    <li><strong>Feature Extraction:</strong> Identification of key visual patterns</li>
+                    <li><strong>Classification:</strong> Tumor type determination with confidence scoring</li>
+                    <li><strong>Result Compilation:</strong> Comprehensive report generation</li>
+                </ol>
+            </div>
+            
+            <div class="card">
+                <h2>Our Mission</h2>
+                <p>We believe early detection saves lives. BrainScan aims to make advanced diagnostic tools accessible to medical professionals worldwide, particularly in underserved regions where specialist radiologists are scarce.</p>
+                <p>Our team of AI researchers, medical professionals, and software engineers are committed to continuous improvement of our algorithms through ongoing research and clinical collaboration.</p>
+                <a href="/contact" class="btn">Contact Our Team</a>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

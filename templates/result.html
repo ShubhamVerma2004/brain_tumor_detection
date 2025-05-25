@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysis Results | BrainScan</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        .navbar {
+            background-color: #FFD700; /* Yellow */
+            color: #000000; /* Black */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar a, .nav-links a {
+            color: #000000; /* Black */
+        }
+        
+        .navbar a:hover, .nav-links a:hover {
+            color: #333333;
+        }
+        
+        footer {
+            background-color: #000000; /* Black */
+            color: #FFD700; /* Yellow */
+            padding: 20px 0;
+            text-align: center;
+            margin-top: 40px;
+            border-top: 3px solid #FFD700;
+        }
+        
+        .disclaimer {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        .btn {
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="/" class="logo">BrainScan</a>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/training">Training</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <header class="results-header">
+            <h1>Scan Analysis Report</h1>
+            <p>AI-powered brain tumor detection results</p>
+        </header>
+        
+        <main>
+            <div class="results-card" id="report-content">
+                <div class="results-container">
+                    <div class="scan-preview">
+                        <div class="scan-image-container">
+                            <img src="{{ image_path }}" alt="MRI Scan" class="scan-image">
+                            <div class="scan-overlay">
+                                <span class="overlay-text">MRI Scan Preview</span>
+                            </div>
+                        </div>
+                        <a href="/" class="btn btn-secondary">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="margin-right: 8px;">
+                                <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
+                                <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
+                            </svg>
+                            Analyze Another
+                        </a>
+                    </div>
+                    
+                    <div class="results-details">
+                        <div class="diagnosis-box {% if 'No Tumor' in result %}diagnosis-clear{% else %}diagnosis-found{% endif %}">
+                            <div class="diagnosis-header">
+                                <h2>Diagnosis</h2>
+                                <span class="diagnosis-badge">{{ result }}</span>
+                            </div>
+                            
+                            <div class="confidence-meter">
+                                <div class="meter-labels">
+                                    <span>Confidence Level</span>
+                                    <span>{{ confidence }}%</span>
+                                </div>
+                                <div class="meter-bar">
+                                    <div class="meter-fill" style="width: {{ confidence }}%;"></div>
+                                </div>
+                            </div>
+                            
+                            {% if "No Tumor" not in result %}
+                            <div class="tumor-details">
+                                <h3>About {{ result }}</h3>
+                                <div class="tumor-features">
+                                    {% if "Glioma" in result %}
+                                    <div class="feature">
+                                        <div class="feature-icon">🔬</div>
+                                        <p>Originates in glial cells, most common primary brain tumor</p>
+                                    </div>
+                                    <div class="feature">
+                                        <div class="feature-icon">⚠️</div>
+                                        <p>Can range from benign to highly malignant</p>
+                                    </div>
+                                    <div class="feature">
+                                        <div class="feature-icon">🔄</div>
+                                        <p>Requires prompt medical evaluation</p>
+                                    </div>
+                                    {% elif "Meningioma" in result %}
+                                    <div class="feature">
+                                        <div class="feature-icon">🧠</div>
+                                        <p>Forms in the meninges (protective brain membranes)</p>
+                                    </div>
+                                    <div class="feature">
+                                        <div class="feature-icon">♀️</div>
+                                        <p>More common in women, typically benign</p>
+                                    </div>
+                                    <div class="feature">
+                                        <div class="feature-icon">📈</div>
+                                        <p>May require monitoring or surgical removal</p>
+                                    </div>
+                                    {% elif "Pituitary" in result %}
+                                    <div class="feature">
+                                        <div class="feature-icon">⚖️</div>
+                                        <p>Affects hormone-producing pituitary gland</p>
+                                    </div>
+                                    <div class="feature">
+                                        <div class="feature-icon">🔄</div>
+                                        <p>Can cause endocrine system imbalances</p>
+                                    </div>
+                                    <div class="feature">
+                                        <div class="feature-icon">🏥</div>
+                                        <p>Often treatable with surgery or medication</p>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="recommendation-box">
+                            <h3>Medical Recommendation</h3>
+                            <div class="recommendation-content">
+                                {% if "No Tumor" in result %}
+                                <p>No tumor detected in this scan. Routine follow-up recommended as part of normal healthcare maintenance.</p>
+                                {% else %}
+                                <p>Our analysis suggests the presence of a {{ result }}. Please consult with a neurosurgeon or oncologist for:</p>
+                                <ul class="recommendation-list">
+                                    <li>Comprehensive diagnostic evaluation</li>
+                                    <li>Treatment planning</li>
+                                    <li>Ongoing monitoring</li>
+                                </ul>
+                                {% endif %}
+                            </div>
+                            <div class="recommendation-footer">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="margin-right: 8px;">
+                                    <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zM7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5zM4.285 9.567a.5.5 0 0 1 .683.183A3.498 3.498 0 0 0 8 11.5a3.498 3.498 0 0 0 3.032-1.75.5.5 0 1 1 .866.5A4.498 4.498 0 0 1 8 12.5a4.498 4.498 0 0 1-3.898-2.25.5.5 0 0 1 .183-.683zM10 8c-.552 0-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5S10.552 8 10 8z"/>
+                                </svg>
+                                <span>This analysis was completed on {{ timestamp }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="action-buttons">
+                <button class="btn btn-outline" id="download-pdf">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="margin-right: 8px;">
+                        <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                        <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                    </svg>
+                    Download Full Report
+                </button>
+                <button class="btn" id="share-results">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="margin-right: 8px;">
+                        <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+                    </svg>
+                    Share Results
+                </button>
+            </div>
+        </main>
+    </div>
+    
+    <footer>
+        <p class="disclaimer">Note: This AI analysis is for research purposes only and should not replace professional medical diagnosis. Always consult with a qualified healthcare provider.</p>
+    </footer>
+
+    <script>
+        document.getElementById('download-pdf').addEventListener('click', function() {
+            // Get the report content element
+            const element = document.getElementById('report-content');
+            
+            // Options for PDF generation
+            const opt = {
+                margin: 10,
+                filename: 'BrainScan_Report_{{ timestamp }}.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+            
+            // Generate PDF
+            html2pdf().set(opt).from(element).save();
+        });
+        
+        document.getElementById('share-results').addEventListener('click', function() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'BrainScan Analysis Results',
+                    text: 'Check out my brain scan analysis results from BrainScan',
+                    url: window.location.href
+                })
+                .catch(error => console.log('Error sharing:', error));
+            } else {
+                alert('Web Share API not supported in your browser. You can copy the link manually.');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="BrainScan model training details">
+    <title>Model Training | BrainScan</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="/" class="logo">BrainScan</a>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/training"target="_blank" >Training</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <header>
+            <h1>Model Training Details</h1>
+            <p>Technical specifications and performance metrics of our brain tumor classification model</p>
+        </header>
+        
+        <main>
+            <div class="card">
+                <h2>Model Architecture</h2>
+                <p>Our custom convolutional neural network (CNN) architecture is optimized for medical image analysis with the following structure:</p>
+                
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">📐</div>
+                        <h4>Input Layer</h4>
+                        <p>256×256×3 RGB image input with normalization</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔄</div>
+                        <h4>Feature Extraction</h4>
+                        <p>5 convolutional blocks with batch normalization</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🧠</div>
+                        <h4>Classification Head</h4>
+                        <p>3 dense layers with dropout regularization</p>
+                    </div>
+                </div>
+                
+                <h3>Training Parameters</h3>
+                <ul style="margin-left: 20px; line-height: 1.8;">
+                    <li><strong>Optimizer:</strong> Adam with learning rate 0.0001</li>
+                    <li><strong>Loss Function:</strong> Categorical Crossentropy</li>
+                    <li><strong>Batch Size:</strong> 32</li>
+                    <li><strong>Epochs:</strong> 50 with early stopping</li>
+                    <li><strong>Augmentation:</strong> Rotation, zoom, and flip transformations</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <h2>Performance Metrics</h2>
+                <p>Final validation metrics after training completion:</p>
+                
+                <div class="metrics-container">
+                    <div class="metric-card">
+                        <h4>Accuracy</h4>
+                        <div class="metric-value">{{ final_accuracy }}%</div>
+                        <p>Classification accuracy on validation set</p>
+                    </div>
+                    <div class="metric-card">
+                        <h4>Precision</h4>
+                        <div class="metric-value">{{ precision }}%</div>
+                        <p>Average across all classes</p>
+                    </div>
+                    <div class="metric-card">
+                        <h4>Recall</h4>
+                        <div class="metric-value">{{ recall }}%</div>
+                        <p>Average across all classes</p>
+                    </div>
+                    <div class="metric-card">
+                        <h4>F1-Score</h4>
+                        <div class="metric-value">{{ f1_score }}%</div>
+                        <p>Harmonic mean of precision/recall</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2>Training Progress</h2>
+                <div class="plot-container">
+                    <img src="{{ plot_url }}" alt="Training Metrics Plot" class="training-plot">
+                    <p>Accuracy and loss curves showing model convergence during training</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2>Confusion Matrix</h2>
+                <div class="plot-container">
+                    <img src="{{ confusion_matrix_url }}" alt="Confusion Matrix" class="training-plot">
+                    <p>Detailed breakdown of classification performance per tumor type</p>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <footer>
+        <p class="disclaimer">Model performance metrics based on validation set. Real-world performance may vary.</p>
+    </footer>
+</body>
+</html>

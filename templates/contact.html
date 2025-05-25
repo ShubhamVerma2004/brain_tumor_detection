@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contact the BrainScan team">
+    <title>Contact Us | BrainScan</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="/" class="logo">BrainScan</a>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/training"  target="_blank">Training</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <header>
+            <h1>Contact Our Team</h1>
+            <p>We'd love to hear from you - whether you have questions, feedback, or partnership inquiries</p>
+        </header>
+        
+        <main>
+            <div class="card">
+                <div class="contact-section">
+                    <div class="feature-grid">
+                        <div class="feature-card">
+                            <h2>Contact Information</h2>
+                            <div class="contact-info">
+                                <p><strong>📧 Email:</strong> <a href="mailto:contact@brainscan.com">contact@brainscan.com</a></p>
+                                <p><strong>📞 Phone:</strong> <a href="tel:+11234567890">+1 (123) 456-7890</a></p>
+                                <p><strong>🏢 Address:</strong> 123 Medical Innovation Drive, Tech City, TC 12345</p>
+                            </div>
+                            <h3 style="margin-top: 30px;">Business Hours</h3>
+                            <p>Monday - Friday: 9:00 AM - 5:00 PM EST</p>
+                            <p>Weekends: Closed</p>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <h2>Send Us a Message</h2>
+                            <form class="contact-form">
+                                <div class="form-group">
+                                    <label for="name">Your Name</label>
+                                    <input type="text" id="name" name="name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email Address</label>
+                                    <input type="email" id="email" name="email" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="subject">Subject</label>
+                                    <input type="text" id="subject" name="subject" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="message">Message</label>
+                                    <textarea id="message" name="message" required></textarea>
+                                </div>
+                                <button type="submit" class="btn">Send Message</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2>Frequently Asked Questions</h2>
+                <div class="faq-item">
+                    <h3>How accurate is BrainScan?</h3>
+                    <p>Our current model achieves 97.2% accuracy in controlled tests. However, real-world performance may vary based on image quality.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Can I use BrainScan for clinical diagnosis?</h3>
+                    <p>BrainScan is currently a research tool and should not be used as the sole basis for clinical decisions.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Do you offer API access?</h3>
+                    <p>Yes, we provide API access for research institutions. Contact us for more information.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

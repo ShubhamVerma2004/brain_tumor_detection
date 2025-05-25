@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Advanced brain tumor detection using AI technology">
+    <title>Brain Tumor Detection | BrainScan</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+    /* Base Styles */
+:root {
+    --primary-color: #FFD700; /* Yellow */
+    --primary-dark: #FFC000; /* Darker yellow */
+    --primary-darker: #FFA500; /* Orange-yellow */
+    --secondary-color: #000000; /* Black */
+    --dark-color: #212121;
+    --light-color: #f5f5f5;
+    --gray-color: #757575;
+    --white: #ffffff;
+    --black: #000000;
+    --success-color: #4CAF50;
+    --warning-color: #FF9800;
+    --danger-color: #F44336;
+    --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: var(--dark-color);
+    background-color: var(--white);
+    overflow-x: hidden;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.full-width-section {
+    width: 100%;
+    padding: 80px 0;
+}
+
+.blue-bg {
+    background-color: var(--primary-color);
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    color: var(--dark-color);
+}
+
+h1 {
+    font-size: 2.5rem;
+}
+
+h2 {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 40px;
+    position: relative;
+}
+
+h2::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background-color: var(--primary-color);
+}
+
+p {
+    margin-bottom: 15px;
+    color: var(--gray-color);
+}
+
+a {
+    text-decoration: none;
+    color: var(--primary-color);
+    transition: var(--transition);
+}
+
+a:hover {
+    color: var(--primary-dark);
+}
+
+/* Buttons - Yellow and Black */
+.btn-primary {
+    display: inline-block;
+    background-color: var(--primary-color); /* Yellow */
+    color: var(--black); /* Black text */
+    padding: 12px 30px;
+    border-radius: 4px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: var(--transition);
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark); /* Darker yellow */
+    color: var(--black);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+}
+
+.btn-outline {
+    display: inline-block;
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+    padding: 10px 25px;
+    border-radius: 4px;
+    font-weight: 600;
+    transition: var(--transition);
+    background-color: transparent;
+}
+
+.btn-outline:hover {
+    background-color: var(--primary-color);
+    color: var(--black);
+}
+
+.btn-black {
+    background-color: var(--black);
+    color: var(--primary-color);
+    border: 2px solid var(--black);
+}
+
+.btn-black:hover {
+    background-color: transparent;
+    color: var(--black);
+}
+
+.btn-large {
+    padding: 15px 40px;
+    font-size: 1.1rem;
+}
+
+/* Navbar - Yellow Style */
+.navbar {
+    background-color: var(--primary-color); /* Yellow */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    padding: 15px 0;
+    transition: var(--transition);
+}
+
+.navbar.scrolled {
+    background-color: var(--primary-color); /* Keep yellow when scrolled */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    padding: 10px 0;
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--black); /* Black text for contrast */
+    display: flex;
+    align-items: center;
+}
+
+.logo i {
+    margin-right: 10px;
+    font-size: 1.5rem;
+    color: var(--black);
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+}
+
+.nav-links li {
+    margin-left: 30px;
+    position: relative;
+}
+
+.nav-links a {
+    color: var(--black); /* Black text for contrast */
+    font-weight: 600;
+    padding: 5px 0;
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--black); /* Black underline */
+    transition: var(--transition);
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+.nav-links a:hover {
+    color: var(--black);
+}
+
+.btn-login {
+    background-color: var(--black); /* Black button */
+    color: var(--primary-color); /* Yellow text */
+    padding: 8px 20px;
+    border-radius: 4px;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.btn-login:hover {
+    background-color: #333; /* Darker black */
+    color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+.hamburger {
+    display: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--black);
+    transition: var(--transition);
+}
+
+.hamburger:hover {
+    color: #333;
+}
+
+/* Hero Section with Video Background */
+.hero {
+    height: 100vh;
+    min-height: 600px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    color: var(--white);
+    text-align: center;
+    margin-top: 70px;
+    overflow: hidden;
+}
+
+.hero-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: -1;
+}
+
+.hero-content {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 20px;
+    animation: fadeInUp 1s ease;
+}
+
+.hero h1 {
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+    color: var(--white);
+}
+
+.hero p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* How It Works Section */
+.how-it-works {
+    background-color: var(--white);
+    text-align: center;
+}
+
+.steps-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-top: 50px;
+}
+
+.step {
+    flex: 0 0 calc(33.333% - 30px);
+    padding: 40px 20px;
+    position: relative;
+    background-color: var(--white);
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transition: var(--transition);
+    margin-bottom: 30px;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.step:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    border-color: var(--primary-color);
+}
+
+.step-number {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--primary-color);
+    color: var(--black);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.step-icon {
+    font-size: 3rem;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+.step h3 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+/* Upload Section */
+.upload-section {
+    padding: 80px 0;
+    text-align: center;
+    background-color: #f9f9f9;
+}
+
+.card {
+    background-color: var(--white);
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    margin: 0 auto;
+    max-width: 800px;
+    transition: var(--transition);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.card:hover {
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    transform: translateY(-5px);
+}
+
+.upload-form {
+    margin-top: 30px;
+}
+
+.upload-box {
+    border: 2px dashed var(--gray-color);
+    padding: 40px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+    background-color: rgba(255, 215, 0, 0.05);
+}
+
+.upload-box:hover {
+    border-color: var(--primary-color);
+    background-color: rgba(255, 215, 0, 0.1);
+}
+
+.upload-box input[type="file"] {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.upload-box label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+
+.upload-box label i {
+    font-size: 3rem;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+.upload-box label span {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.file-info {
+    margin-top: 15px;
+    font-size: 0.9rem;
+    color: var(--gray-color);
+    transition: var(--transition);
+}
+
+.supported-formats {
+    margin-top: 20px;
+    font-size: 0.9rem;
+    color: var(--gray-color);
+}
+
+/* Tumor Types Section */
+.tumor-types {
+    text-align: center;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e6e9f0 100%);
+}
+
+.section-subtitle {
+    max-width: 700px;
+    margin: 0 auto 50px;
+    color: var(--dark-color);
+}
+
+.feature-grid {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.feature-card {
+    flex: 0 0 calc(33.333% - 30px);
+    background-color: var(--white);
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background-color: var(--primary-color);
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.feature-icon {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+.feature-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+.learn-more {
+    margin-top: 20px;
+}
+
+.learn-more a {
+    color: var(--primary-color);
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    transition: var(--transition);
+}
+
+.learn-more a:hover {
+    color: var(--primary-dark);
+}
+
+.learn-more i {
+    margin-left: 5px;
+    transition: transform 0.3s ease;
+}
+
+.learn-more a:hover i {
+    transform: translateX(5px);
+}
+
+/* Technology Section */
+.technology {
+    display: flex;
+    align-items: center;
+    padding: 80px 0;
+    background-color: var(--white);
+}
+
+.tech-content {
+    flex: 0 0 60%;
+    padding-right: 50px;
+}
+
+.tech-image {
+    flex: 0 0 40%;
+    position: relative;
+}
+
+.tech-image img {
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: var(--transition);
+}
+
+.tech-image:hover img {
+    transform: scale(1.03);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+}
+
+.tech-stats {
+    display: flex;
+    justify-content: space-between;
+    margin: 40px 0;
+}
+
+.stat {
+    text-align: center;
+    padding: 20px;
+    background-color: rgba(255, 215, 0, 0.1);
+    border-radius: 10px;
+    transition: var(--transition);
+    flex: 0 0 calc(33.333% - 20px);
+    border: 1px solid rgba(255, 215, 0, 0.1);
+}
+
+.stat:hover {
+    background-color: rgba(255, 215, 0, 0.2);
+    transform: translateY(-5px);
+    border-color: var(--primary-color);
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.stat-label {
+    font-size: 1rem;
+    color: var(--gray-color);
+}
+
+/* Testimonials Section */
+.testimonials {
+    background-color: #f9f9f9;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.testimonials::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("{{ url_for('static', filename='images/pattern.png') }}") repeat;
+    opacity: 0.05;
+    z-index: 0;
+}
+
+.testimonial-slider {
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+
+.testimonial {
+    background-color: var(--white);
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    position: relative;
+    transition: var(--transition);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.testimonial:hover {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px);
+}
+
+.quote-icon {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+.testimonial-text {
+    font-size: 1.2rem;
+    font-style: italic;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.testimonial-text::before,
+.testimonial-text::after {
+    content: '"';
+    font-size: 3rem;
+    color: var(--primary-color);
+    opacity: 0.3;
+    position: absolute;
+}
+
+.testimonial-text::before {
+    top: -20px;
+    left: -15px;
+}
+
+.testimonial-text::after {
+    bottom: -40px;
+    right: -15px;
+}
+
+.testimonial-author {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.testimonial-author img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 20px;
+    border: 3px solid var(--primary-color);
+}
+
+.testimonial-author h4 {
+    margin-bottom: 5px;
+}
+
+.testimonial-author p {
+    color: var(--gray-color);
+    font-size: 0.9rem;
+}
+
+/* CTA Section */
+.cta-section {
+    text-align: center;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("{{ url_for('static', filename='images/dots.png') }}") repeat;
+    opacity: 0.1;
+}
+
+.cta-section h2 {
+    margin-bottom: 20px;
+    position: relative;
+    color: var(--black);
+}
+
+.cta-section h2::after {
+    background-color: var(--black);
+}
+
+.cta-section p {
+    margin-bottom: 30px;
+    font-size: 1.2rem;
+    position: relative;
+    color: rgba(0, 0, 0, 0.9);
+}
+
+.cta-section .btn-primary {
+    position: relative;
+    z-index: 1;
+    background-color: var(--black);
+    color: var(--primary-color);
+    font-weight: 700;
+    border: 2px solid var(--black);
+}
+
+.cta-section .btn-primary:hover {
+    background-color: transparent;
+    color: var(--black);
+}
+
+/* Footer - Black and Yellow Style */
+.full-width-footer {
+    background: var(--black); /* Black background */
+    color: var(--primary-color);
+    padding: 60px 0 0;
+    position: relative;
+}
+
+.full-width-footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: var(--primary-color); /* Yellow top border */
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+    position: relative;
+    z-index: 1;
+}
+
+.footer-section {
+    flex: 0 0 calc(33.333% - 40px);
+    margin-bottom: 30px;
+}
+
+.footer-section h3 {
+    color: var(--primary-color); /* Yellow headings */
+    margin-bottom: 20px;
+    font-size: 1.3rem;
+    position: relative;
+    display: inline-block;
+}
+
+.footer-section h3::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 50px;
+    height: 2px;
+    background-color: var(--primary-color); /* Yellow underline */
+}
+
+.footer-section ul {
+    list-style: none;
+}
+
+.footer-section ul li {
+    margin-bottom: 10px;
+    transition: var(--transition);
+}
+
+.footer-section ul li:hover {
+    transform: translateX(5px);
+}
+
+.footer-section ul li a {
+    color: rgba(255, 215, 0, 0.8); /* Semi-transparent yellow */
+    transition: var(--transition);
+    display: inline-block;
+}
+
+.footer-section ul li a:hover {
+    color: var(--primary-color);
+    padding-left: 5px;
+}
+
+.footer-section ul li i {
+    margin-right: 10px;
+    color: var(--primary-color); /* Yellow icons */
+    width: 20px;
+    text-align: center;
+}
+
+.social-links {
+    margin-top: 20px;
+    display: flex;
+}
+
+.social-links a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(255, 215, 0, 0.2); /* Semi-transparent yellow */
+    border-radius: 50%;
+    text-align: center;
+    line-height: 40px;
+    margin-right: 10px;
+    color: var(--primary-color); /* Yellow icons */
+    transition: var(--transition);
+}
+
+.social-links a:hover {
+    background-color: var(--primary-color); /* Solid yellow */
+    color: var(--black); /* Black text */
+    transform: translateY(-5px);
+}
+
+.footer-bottom {
+    background-color: rgba(255, 215, 0, 0.1); /* Very transparent yellow */
+    padding: 20px 0;
+    text-align: center;
+    position: relative;
+}
+
+.footer-bottom::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, rgba(255, 215, 0, 0.3) 50%, transparent 100%); /* Yellow gradient */
+}
+
+.footer-bottom p {
+    margin-bottom: 0;
+    font-size: 0.9rem;
+    color: rgba(255, 215, 0, 0.7); /* Semi-transparent yellow */
+}
+
+.disclaimer {
+    font-size: 0.8rem;
+    color: rgba(255, 215, 0, 0.5); /* More transparent yellow */
+    margin-top: 10px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Styles */
+@media (max-width: 992px) {
+    .steps-container, .feature-grid {
+        flex-direction: column;
+    }
+    
+    .step, .feature-card {
+        flex: 0 0 100%;
+        margin-bottom: 30px;
+    }
+    
+    .technology {
+        flex-direction: column;
+    }
+    
+    .tech-content, .tech-image {
+        flex: 0 0 100%;
+    }
+    
+    .tech-content {
+        padding-right: 0;
+        margin-bottom: 40px;
+    }
+    
+    .footer-section {
+        flex: 0 0 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        background-color: var(--primary-color); /* Yellow mobile menu */
+        flex-direction: column;
+        padding: 20px;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .nav-links.active {
+        display: flex;
+    }
+    
+    .nav-links li {
+        margin: 10px 0;
+    }
+    
+    .hamburger {
+        display: block;
+    }
+    
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+    
+    .hero p {
+        font-size: 1rem;
+    }
+    
+    .testimonial-author {
+        flex-direction: column;
+    }
+    
+    .testimonial-author img {
+        margin-right: 0;
+        margin-bottom: 15px;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero h1 {
+        font-size: 2rem;
+    }
+    
+    .card {
+        padding: 30px 20px;
+    }
+    
+    .upload-box {
+        padding: 30px 15px;
+    }
+    
+    .stat {
+        padding: 15px 10px;
+    }
+    
+    .stat-number {
+        font-size: 2rem;
+    }
+}
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="/" class="logo"><i class="fas fa-brain"></i>BrainScan</a>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/training" target="_blank">Training</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section with Video Background -->
+    <section class="hero">
+        <div class="hero-overlay"></div>
+        <video autoplay muted loop class="hero-video">
+            <source src="{{ url_for('static', filename='videos/16530-273379394_small.mp4') }}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="hero-content container">
+            <h1>Advanced Brain Tumor Detection</h1>
+            <p>Utilizing cutting-edge AI technology for accurate and early diagnosis of brain tumors</p>
+            <a href="#upload-section" class="btn-primary">Get Started</a>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works full-width-section">
+        <div class="container">
+            <h2>How BrainScan Works</h2>
+            <div class="steps-container">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-icon"><i class="fas fa-upload"></i></div>
+                    <h3>Upload MRI Scan</h3>
+                    <p>Simply upload your brain MRI image in DICOM or standard image formats</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-icon"><i class="fas fa-brain"></i></div>
+                    <h3>AI Analysis</h3>
+                    <p>Our deep learning model analyzes the scan with 98.7% accuracy</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-icon"><i class="fas fa-file-medical"></i></div>
+                    <h3>Get Results</h3>
+                    <p>Receive detailed report with tumor classification and probability scores</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Upload Section -->
+    <section id="upload-section" class="upload-section container">
+        <div class="card">
+            <h2>Upload Your MRI Scan</h2>
+            <p>Get instant analysis of potential brain tumors</p>
+            
+            <form method="post" enctype="multipart/form-data" class="upload-form">
+                <div class="upload-box">
+                    <input type="file" name="file" id="file" accept="image/*,.dcm" required>
+                    <label for="file">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <span>Choose MRI Image</span>
+                    </label>
+                    <p class="file-info">No file selected</p>
+                </div>
+                <button type="submit" class="btn-primary">
+                    <i class="fas fa-search"></i> Analyze Scan
+                </button>
+            </form>
+            
+            <div class="supported-formats">
+                <p>Supported formats: JPG, PNG, DICOM</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tumor Types Section -->
+    <section class="tumor-types full-width-section">
+        <div class="container">
+            <h2>Supported Tumor Types</h2>
+            <p class="section-subtitle">Our system detects and classifies the most common brain tumor types</p>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-brain"></i></div>
+                    <h3>Glioma</h3>
+                    <p>Tumors arising from glial cells in the brain and spinal cord, often requiring immediate attention.</p>
+                    <div class="learn-more">
+                        <a href="#">Learn more <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-layer-group"></i></div>
+                    <h3>Meningioma</h3>
+                    <p>Tumors forming in the meninges, the layers of tissue covering the brain and spinal cord.</p>
+                    <div class="learn-more">
+                        <a href="#">Learn more <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-balance-scale"></i></div>
+                    <h3>Pituitary</h3>
+                    <p>Tumors in the pituitary gland that can affect hormone production and regulation.</p>
+                    <div class="learn-more">
+                        <a href="#">Learn more <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology Section -->
+    <section class="technology container">
+        <div class="tech-content">
+            <h2>Our Advanced Technology</h2>
+            <p>BrainScan utilizes a custom-built convolutional neural network (CNN) trained on over 10,000 annotated MRI scans from leading medical institutions worldwide.</p>
+            
+            <div class="tech-stats">
+                <div class="stat">
+                    <div class="stat-number">98.7%</div>
+                    <div class="stat-label">Accuracy</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">94.2%</div>
+                    <div class="stat-label">Sensitivity</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">96.8%</div>
+                    <div class="stat-label">Specificity</div>
+                </div>
+            </div>
+            
+            <a href="/training" class="btn-outline">
+                <i class="fas fa-chart-line"></i> View Training Details
+            </a>
+        </div>
+        <div class="tech-image">
+            <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="AI Neural Network">
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials full-width-section">
+        <div class="container">
+            <h2>Trusted by Medical Professionals</h2>
+            
+            <div class="testimonial-slider">
+                <div class="testimonial">
+                    <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
+                    <p class="testimonial-text">BrainScan has revolutionized our preliminary diagnosis workflow, reducing analysis time from hours to seconds with remarkable accuracy.</p>
+                    <div class="testimonial-author">
+                        <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Dr. Sarah Johnson">
+                        <div>
+                            <h4>Dr. Sarah Johnson</h4>
+                            <p>Chief Neurologist, Mayo Clinic</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section full-width-section">
+        <div class="container">
+            <h2>Ready to Analyze Your MRI Scan?</h2>
+            <p>Get instant results with our advanced AI detection system</p>
+            <a href="#upload-section" class="btn-primary btn-large">
+                <i class="fas fa-upload"></i> Upload Scan Now
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="full-width-footer">
+        <div class="footer-content container">
+            <div class="footer-section">
+                <h3>BrainScan</h3>
+                <p>Advanced AI technology for early and accurate brain tumor detection.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="/"> Home</a></li>
+                    <li><a href="/training"> Training</a></li>
+                    <li><a href="/about"> About</a></li>
+                    <li><a href="/contact"> Contact</a></li>
+                    <li><a href="/privacy"> Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <ul>
+                    <li><i class="fas fa-map-marker-alt"></i> 123 Medical Drive, Boston, MA</li>
+                    <li><i class="fas fa-phone"></i> (555) 123-4567</li>
+                    <li><i class="fas fa-envelope"></i> info@brainscan.com</li>
+                    <li><i class="fas fa-clock"></i> Mon-Fri: 9AM - 5PM</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p>&copy; 2023 BrainScan. All rights reserved.</p>
+                <p class="disclaimer">Note: This tool is for research purposes only. Always consult with a qualified medical professional for diagnosis and treatment.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // File upload display
+        const fileInput = document.getElementById('file');
+        const fileInfo = document.querySelector('.file-info');
+
+        fileInput.addEventListener('change', function() {
+            if (this.files && this.files.length > 0) {
+                fileInfo.textContent = this.files[0].name;
+                fileInfo.style.color = '#4CAF50';
+                fileInfo.style.fontWeight = '600';
+            } else {
+                fileInfo.textContent = 'No file selected';
+                fileInfo.style.color = '#757575';
+                fileInfo.style.fontWeight = 'normal';
+            }
+        });
+
+        // Mobile menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        hamburger.addEventListener('click', function() {
+            navLinks.classList.toggle('active');
+            this.querySelector('i').classList.toggle('fa-times');
+            this.querySelector('i').classList.toggle('fa-bars');
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 768) {
+                    navLinks.classList.remove('active');
+                    hamburger.querySelector('i').classList.add('fa-bars');
+                    hamburger.querySelector('i').classList.remove('fa-times');
+                }
+            });
+        });
+
+        // Responsive adjustments
+        function handleResize() {
+            if (window.innerWidth > 768) {
+                navLinks.style.display = 'flex';
+            } else {
+                navLinks.style.display = 'none';
+            }
+        }
+
+        window.addEventListener('resize', handleResize);
+        handleResize(); // Initialize
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 70,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Animation on scroll
+        const animateOnScroll = function() {
+            const elements = document.querySelectorAll('.step, .feature-card, .card, .testimonial, .stat');
+            
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (elementPosition < windowHeight - 100) {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }
+            });
+        };
+
+        // Initialize elements with opacity 0 for animation
+        document.querySelectorAll('.step, .feature-card, .card, .testimonial, .stat').forEach(element => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(20px)';
+            element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        });
+
+        window.addEventListener('scroll', animateOnScroll);
+        window.addEventListener('load', animateOnScroll);
+    </script>
+</body>
+</html>
